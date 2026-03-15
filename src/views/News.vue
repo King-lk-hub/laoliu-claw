@@ -36,6 +36,10 @@
         shadow="hover" 
         @click="openNews(newsItem)"
       >
+        <!-- 图片显示 -->
+        <div v-if="newsItem.image" class="news-image">
+          <img :src="newsItem.image" :alt="newsItem.title" />
+        </div>
         <div class="news-card-header">
           <el-tag :type="getCategoryType(newsItem.category)" effect="dark" size="small" class="category-tag">
             {{ newsItem.categoryName }}
@@ -85,6 +89,7 @@ export default {
       { value: 'ai', label: 'AI', icon: '🤖' },
       { value: 'military', label: '军事', icon: '🎖️' },
       { value: 'tech', label: '科技', icon: '💻' },
+      { value: 'international', label: '国际', icon: '🌍' },
       { value: 'life', label: '生活', icon: '🏠' }
     ]
 
@@ -92,7 +97,8 @@ export default {
       ai: 'purple',
       military: 'warning',
       tech: 'primary',
-      life: 'success'
+      life: 'success',
+      international: 'info'
     }
 
     const getCategoryType = (category) => {
@@ -230,6 +236,10 @@ export default {
   background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
 }
 
+.category-btn.active.international {
+  background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+}
+
 .category-btn.active.life {
   background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
 }
@@ -263,7 +273,8 @@ export default {
 
 /* 新闻卡片统一样式 - 开片更大 */
 .news-card {
-  height: 260px;
+  height: auto;
+  min-height: 300px;
   cursor: pointer;
   transition: all 0.3s ease;
   border-radius: 16px;
@@ -279,6 +290,26 @@ export default {
 }
 
 .news-card.ai { border-left-color: #9b59b6; }
+
+/* 图片样式 */
+.news-image {
+  width: 100%;
+  height: 140px;
+  overflow: hidden;
+  margin: -20px -20px 12px -20px;
+  background: #f5f5f5;
+}
+
+.news-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.news-card:hover .news-image img {
+  transform: scale(1.05);
+}
 .news-card.military { border-left-color: #f39c12; }
 .news-card.tech { border-left-color: #3498db; }
 .news-card.life { border-left-color: #27ae60; }
