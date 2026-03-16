@@ -104,6 +104,12 @@ def update_diary_file(diary_info):
     else:
         data = {"updateTime": "", "diaries": []}
     
+    # 检查今天是否已写过日记
+    today_str = now.strftime("%Y年%m月%d日")
+    if data.get("diaries") and data["diaries"][0].get("dateStr") == today_str:
+        print(f"⚠️ 今天({today_str})已经写过日记了，跳过")
+        return None
+    
     # 创建新日记
     now = datetime.now()
     new_diary = {
@@ -169,17 +175,20 @@ def main():
     print(f"📝 标题: {diary_info['title']}")
     
     # 更新文件
-    update_diary_file(diary_info)
-    print("✅ 日记已更新")
-    
-    # 推送到GitHub
-    print("📤 推送到GitHub...")
-    push_to_github()
-    print("✅ 已推送!")
-    
-    # 推送到云服务器
-    print("📤 推送到云服务器...")
-    push_to_server()
+    result = update_diary_file(diary_info)
+    if result is None:
+        print("⏭️ 跳过推送，今天已写过日记")
+    else:
+        print("✅ 日记已更新")
+        
+        # 推送到GitHub
+        print("📤 推送到GitHub...")
+        push_to_github()
+        print("✅ 已推送!")
+        
+        # 推送到云服务器
+        print("📤 推送到云服务器...")
+        push_to_server()
     
     print("🎉 日记更新完成!")
 
