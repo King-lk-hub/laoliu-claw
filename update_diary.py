@@ -13,14 +13,14 @@ import subprocess
 from datetime import datetime
 import shutil
 
-# 备用API配置（硅基流动免费）
-API_URL = "https://api.siliconflow.cn/v1/chat/completions"
-API_KEY = "sk-qsqjwiitlarrnalhujuhtsnpbptsdcjhagrvkqemupbzrkfb"
+# 主用API配置（MiniMax-M2.5）
+API_URL = "https://api.scnet.cn/api/llm/v1/chat/completions"
+API_KEY = "sk-MTQ0LTExMjc1OTM2NDkwLTE3NzM0NTA0OTQ4MTM="
 
-MODEL = "Qwen/Qwen2.5-7B-Instruct"
+MODEL = "MiniMax-M2.5"
 
-DIARY_FILE = "/root/.openclaw/workspace/king-lk-hub.github.io/diary-data.json"
-GITHUB_REPO = "/root/.openclaw/workspace/king-lk-hub.github.io"
+DIARY_FILE = "/root/.openclaw/workspace/LaoliuClaw/diary-data.json"
+GITHUB_REPO = "/root/.openclaw/workspace/LaoliuClaw"
 
 # 天气和心情选项
 WEATHERS = ["☀️", "🌤️", "⛅", "🌧️", "❄️", "🌩️", "☁️"]

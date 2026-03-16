@@ -1,0 +1,108 @@
+{
+  "meta": {
+    "lastTouchedVersion": "2026.3.12",
+    "lastTouchedAt": "2026-03-13T14:29:14.600Z"
+  },
+  "wizard": {
+    "lastRunAt": "2026-03-13T12:32:14.473Z",
+    "lastRunVersion": "2026.3.12",
+    "lastRunCommand": "onboard",
+    "lastRunMode": "local"
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "glm-api": {
+        "baseUrl": "https://api.scnet.cn/api/llm/v1",
+        "apiKey": "sk-MTQ0LTExMjc1OTM2NDkwLTE3NzM0NTA0OTQ4MTM=",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "MiniMax-M2.5",
+            "name": "MiniMax-M2.5"
+          }
+        ]
+      },
+      "siliconflow": {
+        "baseUrl": "https://api.siliconflow.cn/v1",
+        "apiKey": "sk-qsqjwiitlarrnalhujuhtsnpbptsdcjhagrvkqemupbzrkfb",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "Pro/zai-org/GLM-5",
+            "name": "GLM-5"
+          },
+          {
+            "id": "Qwen2.5-7B-Instruct",
+            "name": "Qwen2.5-7B-Instruct"
+          },
+          {
+            "id": "GLM-4-9B-Chat",
+            "name": "GLM-4-9B-Chat"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "siliconflow/Pro/zai-org/GLM-5"
+      },
+      "workspace": "/root/.openclaw/workspace"
+    },
+    "list": [
+      {
+        "id": "main",
+        "identity": {
+          "name": "老六",
+          "emoji": "🦞"
+        }
+      }
+    ]
+  },
+  "tools": {
+    "profile": "coding"
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "session": {
+    "dmScope": "per-channel-peer"
+  },
+  "channels": {
+    "feishu": {
+      "appId": "cli_a93eb783a5381bd6",
+      "appSecret": "Hj5kkYoHkBXiYhbqFLgxNeLZ7zTHBklr",
+      "name": "老六助手"
+    }
+  },
+  "gateway": {
+    "port": 18789,
+    "mode": "local",
+    "bind": "loopback",
+    "auth": {
+      "mode": "token",
+      "token": "db6cc8a2252d3e0b3c38ba162efc70f10a778c960777518b"
+    },
+    "tailscale": {
+      "mode": "off",
+      "resetOnExit": false
+    }
+  },
+  "skills": {
+    "install": {
+      "nodeManager": "npm"
+    }
+  },
+  "plugins": {
+    "entries": {
+      "feishu": {
+        "enabled": true
+      }
+    }
+  }
+}
