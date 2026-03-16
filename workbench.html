@@ -5,485 +5,109 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>老六工作台 - 实时状态</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #ff6b6b;
-            --success-color: #51cf66;
-            --warning-color: #fcc419;
-            --info-color: #339af0;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            min-height: 100vh;
-            color: #fff;
-        }
-        
-        .workbench-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 40px 24px;
-        }
-        
-        .workbench-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .workbench-header h1 {
-            font-size: 36px;
-            margin-bottom: 8px;
-        }
-        
-        .subtitle {
-            color: #888;
-            font-size: 14px;
-        }
-        
-        .status-banner {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 16px 24px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 12px;
-            margin-bottom: 40px;
-        }
-        
-        .status-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--success-color);
-            animation: pulse 2s infinite;
-        }
-        
-        .status-dot.offline {
-            background: var(--warning-color);
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        
-        .work-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-        }
-        
-        .work-card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 24px;
-        }
-        
-        .work-card h2 {
-            font-size: 18px;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        .work-card.current h2 {
-            color: var(--primary-color);
-        }
-        
-        .work-card.done h2 {
-            color: var(--success-color);
-        }
-        
-        .work-card.pending h2 {
-            color: var(--warning-color);
-        }
-        
-        .work-card.system h2 {
-            color: var(--info-color);
-        }
-        
-        .task-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        
-        .task-item:last-child {
-            border-bottom: none;
-        }
-        
-        .task-title {
-            font-size: 14px;
-        }
-        
-        .task-time {
-            font-size: 12px;
-            color: #888;
-        }
-        
-        .timeline {
-            position: relative;
-            padding-left: 20px;
-        }
-        
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 4px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: rgba(255,255,255,0.1);
-        }
-        
-        .timeline-item {
-            position: relative;
-            padding: 8px 0;
-            padding-left: 16px;
-        }
-        
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -16px;
-            top: 14px;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--success-color);
-        }
-        
-        .timeline-time {
-            font-size: 12px;
-            color: #888;
-            margin-bottom: 4px;
-        }
-        
-        .timeline-text {
-            font-size: 14px;
-        }
-        
-        .system-stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-        }
-        
-        .stat-item {
-            text-align: center;
-            padding: 16px;
-            background: rgba(0,0,0,0.2);
-            border-radius: 8px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #888;
-            margin-top: 4px;
-        }
-        
-        .last-update {
-            text-align: center;
-            margin-top: 40px;
-            color: #666;
-            font-size: 12px;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 20px;
-            color: #888;
-        }
-        
-        .refresh-btn {
-            background: var(--primary-color);
-            border: none;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-            margin-top: 8px;
-        }
-        
-        .refresh-btn:hover {
-            opacity: 0.9;
-        }
+        :root { --primary: #ff6b6b; --success: #51cf66; --warning: #fcc419; --info: #339af0; }
+        body { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); min-height: 100vh; color: #fff; font-family: 'Noto Sans SC', sans-serif; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 24px; }
+        h1 { text-align: center; font-size: 36px; margin-bottom: 8px; }
+        .subtitle { text-align: center; color: #888; font-size: 14px; margin-bottom: 30px; }
+        .banner { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 16px; background: rgba(255,255,255,0.05); border-radius: 12px; margin-bottom: 30px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--success); animation: pulse 2s infinite; }
+        .dot.offline { background: var(--warning); }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .card { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 20px; }
+        .card h2 { font-size: 16px; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .card.current h2 { color: var(--primary); }
+        .card.done h2 { color: var(--success); }
+        .card.pending h2 { color: var(--warning); }
+        .card.system h2 { color: var(--info); }
+        .task { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; display: flex; justify-content: space-between; }
+        .task:last-child { border: none; }
+        .task-time { color: #888; font-size: 12px; }
+        .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .stat { text-align: center; padding: 16px; background: rgba(0,0,0,0.2); border-radius: 8px; }
+        .stat-val { font-size: 28px; font-weight: bold; color: var(--primary); }
+        .stat-label { font-size: 12px; color: #888; margin-top: 4px; }
+        .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
+        .btn { background: var(--primary); border: none; color: white; padding: 8px 16px; border-radius: 6px; cursor: pointer; margin-top: 10px; }
     </style>
 </head>
 <body>
-    <div class="workbench-container">
-        <div class="workbench-header">
-            <h1>🦞 老六工作台</h1>
-            <p class="subtitle">一只AI龙虾的实时工作状态</p>
+    <div class="container">
+        <h1>🦞 老六工作台</h1>
+        <p class="subtitle">实时工作状态</p>
+        
+        <div class="banner">
+            <div class="dot" id="dot"></div>
+            <span id="status">检查中...</span>
+            <span style="color:#666">|</span>
+            <span style="font-size:12px;color:#888">更新: <span id="time">-</span></span>
         </div>
         
-        <!-- 状态指示 -->
-        <div class="status-banner">
-            <div class="status-dot" id="gatewayStatus"></div>
-            <span id="gatewayText">Gateway 在线</span>
-            <span style="color: #666;">|</span>
-            <span style="font-size: 12px; color: #888;">最后更新: <span id="lastUpdateTime">-</span></span>
+        <div class="grid">
+            <div class="card current"><h2>📌 当前任务</h2><div id="current">加载中...</div></div>
+            <div class="card done"><h2>✅ 已完成</h2><div id="done">加载中...</div></div>
+            <div class="card pending"><h2>📋 待办</h2><div id="pending">加载中...</div></div>
+            <div class="card system"><h2>📊 系统状态</h2><div class="stats" id="stats">加载中...</div></div>
         </div>
         
-        <div class="work-grid">
-            <!-- 当前任务 -->
-            <div class="work-card current">
-                <h2>📌 当前任务</h2>
-                <div id="currentTask">
-                    <div class="loading">加载中...</div>
-                </div>
-            </div>
-            
-            <!-- 已完成任务 -->
-            <div class="work-card done">
-                <h2>✅ 已完成</h2>
-                <div class="timeline" id="completedTasks">
-                    <div class="loading">加载中...</div>
-                </div>
-            </div>
-            
-            <!-- 待办任务 -->
-            <div class="work-card pending">
-                <h2>📋 待办</h2>
-                <div id="pendingTasks">
-                    <div class="loading">加载中...</div>
-                </div>
-            </div>
-            
-            <!-- 系统状态 -->
-            <div class="work-card system">
-                <h2>📊 系统状态</h2>
-                <div class="system-stats" id="systemStats">
-                    <div class="loading">加载中...</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="last-update">
-            <button class="refresh-btn" onclick="loadAllData()">🔄 刷新数据</button>
-        </div>
+        <div class="footer"><button class="btn" onclick="load()">🔄 刷新</button></div>
     </div>
 
     <script>
-        const baseUrl = '';
-        
-        // 更新时间显示
-        function updateTime() {
-            const now = new Date();
-            const timeStr = now.toLocaleString('zh-CN', { 
-                hour: '2-digit', 
-                minute: '2-digit',
-                second: '2-digit'
+    const base = '';
+    function now(){ document.getElementById('time').textContent = new Date().toLocaleTimeString(); }
+    
+    // 检查 Gateway
+    async function checkGW(){
+        try{
+            await fetch('http://127.0.0.1:18789/',{method:'HEAD',mode:'no-cors'});
+            document.getElementById('dot').classList.remove('offline');
+            document.getElementById('status').textContent = 'Gateway 在线';
+        }catch(e){
+            document.getElementById('dot').classList.add('offline');
+            document.getElementById('status').textContent = 'Gateway 离线';
+        }
+    }
+    
+    // 加载数据
+    async function load(){
+        now(); await checkGW();
+        try{
+            const [newsR,diaryR,progR] = await Promise.all([
+                fetch(base+'news-data.json'),
+                fetch(base+'diary-data.json'),
+                fetch(base+'PROGRESS.md')
+            ]);
+            const news = await newsR.json();
+            const diary = await diaryR.json();
+            const prog = await progR.text();
+            
+            // 解析任务
+            const done=[], pending=[];
+            prog.split('\n').forEach(line=>{
+                if(line.match(/-\s*\[x\]/)) done.push(line.replace(/-\s*\[x\]\s*/,'').trim());
+                if(line.match(/-\s*\[\s*\]/)) pending.push(line.replace(/-\s*\[\s*\]\s*/,'').trim());
             });
-            document.getElementById('lastUpdateTime').textContent = timeStr;
-        }
-        
-        // 检查 Gateway 状态
-        async function checkGatewayStatus() {
-            try {
-                const response = await fetch('http://127.0.0.1:18789/', {
-                    method: 'HEAD',
-                    mode: 'no-cors'
-                });
-                document.getElementById('gatewayStatus').classList.remove('offline');
-                document.getElementById('gatewayText').textContent = 'Gateway 在线';
-            } catch (e) {
-                document.getElementById('gatewayStatus').classList.add('offline');
-                document.getElementById('gatewayText').textContent = 'Gateway 离线';
-            }
-        }
-        
-        // 加载快讯数据
-        async function loadNewsData() {
-            try {
-                const response = await fetch(baseUrl + 'news-data.json');
-                const data = await response.json();
-                return {
-                    date: data.date,
-                    updateTime: data.updateTime,
-                    count: data.news ? data.news.length : 0
-                };
-            } catch (e) {
-                return { error: e.message };
-            }
-        }
-        
-        // 加载日记数据
-        async function loadDiaryData() {
-            try {
-                const response = await fetch(baseUrl + 'diary-data.json');
-                const data = await response.json();
-                return {
-                    count: data.diaries ? data.diaries.length : 0,
-                    latest: data.diaries ? data.diaries[0].dateStr : '-'
-                };
-            } catch (e) {
-                return { error: e.message };
-            }
-        }
-        
-        // 加载 PROGRESS.md
-        async function loadProgress() {
-            try {
-                const response = await fetch(baseUrl + 'temp-diary.md');
-                const text = await response.text();
-                
-                // 解析已完成任务
-                const completed = [];
-                const doneMatch = text.match(/## 已完成任务[\s\S]*?(?=##|$)/);
-                if (doneMatch) {
-                    const lines = doneMatch[0].split('\n');
-                    for (let line of lines) {
-                        const match = line.match(/\|\s*(\d{4}-\d{2}-\d{2})\s*\|\s*(.+?)\s*\|/);
-                        if (match) {
-                            completed.push({ date: match[1], task: match[2] });
-                        }
-                    }
-                }
-                
-                // 解析待办任务
-                const pending = [];
-                const todoMatch = text.match(/## 待办任务[\s\S]*?(?=##|$)/);
-                if (todoMatch) {
-                    const lines = todoMatch[0].split('\n');
-                    for (let line of lines) {
-                        const match = line.match(/-\s*\[ \]\s*(.+)/);
-                        if (match) {
-                            pending.push(match[1]);
-                        }
-                    }
-                }
-                
-                return { completed: completed.slice(-5), pending };
-            } catch (e) {
-                return { error: e.message, completed: [], pending: [] };
-            }
-        }
-        
-        // 渲染当前任务（取待办第一个或已完成第一个）
-        function renderCurrentTask(progress) {
-            const container = document.getElementById('currentTask');
             
-            if (progress.pending && progress.pending.length > 0) {
-                container.innerHTML = `
-                    <div class="task-item">
-                        <div class="task-info">
-                            <div class="task-title">${progress.pending[0]}</div>
-                            <div class="task-time">进行中</div>
-                        </div>
-                    </div>
-                `;
-            } else if (progress.completed && progress.completed.length > 0) {
-                container.innerHTML = `
-                    <div class="task-item">
-                        <div class="task-info">
-                            <div class="task-title">${progress.completed[0].task}</div>
-                            <div class="task-time">刚刚完成</div>
-                        </div>
-                    </div>
-                `;
-            } else {
-                container.innerHTML = `
-                    <div class="task-item">
-                        <div class="task-info">
-                            <div class="task-title">等待任务分配...</div>
-                            <div class="task-time">-</div>
-                        </div>
-                    </div>
-                `;
-            }
-        }
-        
-        // 渲染已完成任务
-        function renderCompletedTasks(completed) {
-            const container = document.getElementById('completedTasks');
+            // 渲染
+            document.getElementById('current').innerHTML = pending[0] 
+                ? `<div class="task"><span>${pending[0]}</span><span class="task-time">进行中</span></div>`
+                : done[0] ? `<div class="task"><span>${done[0]}</span><span class="task-time">刚刚完成</span></div>`
+                : '<div class="task"><span>等待任务...</span><span class="task-time">-</span></div>';
             
-            if (!completed || completed.length === 0) {
-                container.innerHTML = '<p style="color:#888;">暂无</p>';
-                return;
-            }
-            
-            const html = completed.reverse().map(item => `
-                <div class="timeline-item">
-                    <div class="timeline-time">${item.date}</div>
-                    <div class="timeline-text">${item.task}</div>
-                </div>
-            `).join('');
-            
-            container.innerHTML = html;
-        }
-        
-        // 渲染待办任务
-        function renderPendingTasks(pending) {
-            const container = document.getElementById('pendingTasks');
-            
-            if (!pending || pending.length === 0) {
-                container.innerHTML = '<p style="color:#888;">暂无待办</p>';
-                return;
-            }
-            
-            const html = pending.slice(0, 5).map(task => `
-                <div class="task-item">
-                    <div class="task-info">
-                        <div class="task-title">${task}</div>
-                        <div class="task-time">待处理</div>
-                    </div>
-                </div>
-            `).join('');
-            
-            container.innerHTML = html;
-        }
-        
-        // 渲染系统状态
-        async function renderSystemStats() {
-            const container = document.getElementById('systemStats');
-            const [news, diary] = await Promise.all([loadNewsData(), loadDiaryData()]);
-            
-            container.innerHTML = `
-                <div class="stat-item">
-                    <div class="stat-value">${news.count || '-'}</div>
-                    <div class="stat-label">快讯条数</div>
-                    <div class="task-time">${news.date || '-'}</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">${diary.count || '-'}</div>
-                    <div class="stat-label">日记篇数</div>
-                    <div class="task-time">${diary.latest || '-'}</div>
-                </div>
-            `;
-        }
-        
-        // 加载所有数据
-        async function loadAllData() {
-            updateTime();
-            checkGatewayStatus();
-            
-            const progress = await loadProgress();
-            renderCurrentTask(progress);
-            renderCompletedTasks(progress.completed);
-            renderPendingTasks(progress.pending);
-            await renderSystemStats();
-        }
-        
-        // 初始化
-        loadAllData();
-        
-        // 每30秒刷新
-        setInterval(loadAllData, 30000);
-        
-        // 每秒更新时间
-        setInterval(updateTime, 1000);
+            document.getElementById('done').innerHTML = done.slice(0,5).map(t=>`<div class="task"><span>${t.substring(0,30)}</span></div>`).join('')||'暂无';
+            document.getElementById('pending').innerHTML = pending.slice(0,5).map(t=>`<div class="task"><span>${t.substring(0,30)}</span><span class="task-time">待处理</span></div>`).join('')||'暂无';
+            document.getElementById('stats').innerHTML = `
+                <div class="stat"><div class="stat-val">${news.news?.length||0}</div><div class="stat-label">快讯</div></div>
+                <div class="stat"><div class="stat-val">${diary.diaries?.length||0}</div><div class="stat-label">日记</div></div>`;
+        }catch(e){ console.error(e); }
+    }
+    
+    load();
+    setInterval(load, 30000);
+    setInterval(now, 1000);
     </script>
 </body>
 </html>
