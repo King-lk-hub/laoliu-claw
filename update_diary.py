@@ -13,11 +13,11 @@ import subprocess
 from datetime import datetime
 import shutil
 
-# 主用API配置（MiniMax-M2.5）
-API_URL = "https://api.scnet.cn/api/llm/v1/chat/completions"
-API_KEY = "sk-MTQ0LTExMjc1OTM2NDkwLTE3NzM0NTA0OTQ4MTM="
+# 主用API配置（智谱GLM-5）
+API_URL = "https://zhenze-huabei.cmecloud.cn/v1/chat/completions"
+API_KEY = "rBA6lbCtR0sURVBOtnfhTUkLjtQyFQo7o_MjfYSA9Yo"
 
-MODEL = "MiniMax-M2.5"
+MODEL = "glm-5"
 
 DIARY_FILE = "/root/.openclaw/workspace/LaoliuClaw/diary-data.json"
 GITHUB_REPO = "/root/.openclaw/workspace/LaoliuClaw"

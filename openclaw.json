@@ -13,13 +13,13 @@
     "mode": "merge",
     "providers": {
       "glm-api": {
-        "baseUrl": "https://api.scnet.cn/api/llm/v1",
-        "apiKey": "sk-MTQ0LTExMjc1OTM2NDkwLTE3NzM0NTA0OTQ4MTM=",
+        "baseUrl": "https://zhenze-huabei.cmecloud.cn/v1",
+        "apiKey": "rBA6lbCtR0sURVBOtnfhTUkLjtQyFQo7o_MjfYSA9Yo",
         "api": "openai-completions",
         "models": [
           {
-            "id": "MiniMax-M2.5",
-            "name": "MiniMax-M2.5"
+            "id": "glm-5",
+            "name": "GLM-5"
           }
         ]
       },
@@ -47,7 +47,7 @@
   "agents": {
     "defaults": {
       "model": {
-        "primary": "siliconflow/Pro/zai-org/GLM-5"
+        "primary": "glm-api/MiniMax-M2.5"
       },
       "workspace": "/root/.openclaw/workspace"
     },
